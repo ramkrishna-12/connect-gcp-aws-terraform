@@ -1,4 +1,3 @@
-# Candidate: Ramkrishna Roy Barman
 
 from enum import Enum
 
