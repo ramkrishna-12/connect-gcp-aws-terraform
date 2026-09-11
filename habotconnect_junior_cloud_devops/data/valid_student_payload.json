@@ -1,0 +1,12 @@
+{
+  "first_name": "Maya",
+  "last_name": "Sharma",
+  "email": "maya.sharma@example.com",
+  "date_of_birth": "2014-05-17",
+  "region": "APAC",
+  "has_learning_difficulty": "Yes",
+  "receives_learning_support": "Yes",
+  "needs_learning_support_assistant": "No",
+  "parental_consent": "Yes",
+  "notes": "Requires structured classroom support."
+}
