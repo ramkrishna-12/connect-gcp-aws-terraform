@@ -1,0 +1,22 @@
+{
+  "title": "Student Onboarding Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "first_name", "last_name", "email", "date_of_birth", "region",
+    "has_learning_difficulty", "receives_learning_support",
+    "needs_learning_support_assistant", "parental_consent"
+  ],
+  "properties": {
+    "first_name": {"type": "string", "minLength": 1, "maxLength": 100},
+    "last_name": {"type": "string", "minLength": 1, "maxLength": 100},
+    "email": {"type": "string", "maxLength": 254},
+    "date_of_birth": {"type": "string", "format": "date"},
+    "region": {"type": "string", "enum": ["APAC", "EMEA", "AMER"]},
+    "has_learning_difficulty": {"type": "string", "enum": ["Yes", "No"]},
+    "receives_learning_support": {"type": "string", "enum": ["Yes", "No"]},
+    "needs_learning_support_assistant": {"type": "string", "enum": ["Yes", "No"]},
+    "parental_consent": {"type": "string", "enum": ["Yes", "No"]},
+    "notes": {"type": "string", "maxLength": 500}
+  }
+}
