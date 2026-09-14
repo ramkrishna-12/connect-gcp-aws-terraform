@@ -13,7 +13,7 @@ This repository implements the three explicit tasks in the hiring project:
 3. A Django REST Framework serializer plus a deterministic Yes/No (DCYN) validation library for a student onboarding payload.
 
 The project brief does not provide the exact student JSON schema, field limits, or production identities. Those details are therefore made explicit as documented engineering assumptions rather than silently invented.
-<!-- 
+
 ## Repository layout
 
 ```text
@@ -186,4 +186,4 @@ Before submitting:
 3. Review the documented schema assumptions against any payload supplied later.
 4. Run the local tests.
 5. Run the GitHub workflow with one intentionally invalid commit to demonstrate the fail-closed behavior.
-6. Submit through the Google Form specified in the hiring brief. -->
+6. Submit through the Google Form specified in the hiring brief.
