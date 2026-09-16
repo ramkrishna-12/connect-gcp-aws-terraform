@@ -128,75 +128,75 @@ def add_arrow(slide, x1, y1, x2, y2):
     line.line.width = Pt(2)
     return line
 
-# # Slide 1
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "HabotConnect Secure Staging Project", "Junior Cloud & DevOps Engineer | GCP / Django / React")
-# add_bullets(slide, [
-#     "Candidate: Ramkrishna Roy Barman",
-#     "Three deliverables: secure Terraform, fail-closed CI/CD, deterministic Django validation",
-#     "Objective: turn vague failure conditions into enforceable controls",
-# ], y=1.8, size=22)
+# Slide 1
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "HabotConnect Secure Staging Project", "Junior Cloud & DevOps Engineer | GCP / Django / React")
+add_bullets(slide, [
+    "Candidate: Ramkrishna Roy Barman",
+    "Three deliverables: secure Terraform, fail-closed CI/CD, deterministic Django validation",
+    "Objective: turn vague failure conditions into enforceable controls",
+], y=1.8, size=22)
 
-# # Slide 2
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Requirements Deconstructed")
-# add_bullets(slide, [
-#     "Task 1: provision D0 Raw Landing Google Cloud Storage and D1 Staged/Enforced BigQuery with strict access controls and row-level security.",
-#     "Task 2: create a fail-closed build gate for formatting, linting, security scanning, and hardcoded secrets.",
-#     "Task 3: map student onboarding data into deterministic Yes/No logic and validate it with a Django REST Framework serializer.",
-#     "Submission: structured code, schema workbook, architecture presentation, and failure demonstration.",
-# ], y=1.4, size=19)
+# Slide 2
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Requirements Deconstructed")
+add_bullets(slide, [
+    "Task 1: provision D0 Raw Landing Google Cloud Storage and D1 Staged/Enforced BigQuery with strict access controls and row-level security.",
+    "Task 2: create a fail-closed build gate for formatting, linting, security scanning, and hardcoded secrets.",
+    "Task 3: map student onboarding data into deterministic Yes/No logic and validate it with a Django REST Framework serializer.",
+    "Submission: structured code, schema workbook, architecture presentation, and failure demonstration.",
+], y=1.4, size=19)
 
-# # Slide 3 architecture
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Architecture Overview")
-# nodes = [
-#     ("Developer Commit", 0.5, 2.5),
-#     ("Fail-Closed\nGitHub Actions", 3.2, 2.5),
-#     ("GCS\nD0 Raw Landing", 6.0, 1.6),
-#     ("BigQuery\nD1 Staged/Enforced", 9.0, 1.6),
-#     ("Django + DCYN\nValidation", 6.0, 3.7),
-# ]
-# for text, x, y in nodes:
-#     add_node(slide, text, x, y)
-# add_arrow(slide, 2.9, 2.95, 3.2, 2.95)
-# add_arrow(slide, 5.6, 2.95, 6.0, 2.05)
-# add_arrow(slide, 8.4, 2.05, 9.0, 2.05)
-# add_arrow(slide, 7.2, 3.7, 7.2, 2.5)
-# add_bullets(slide, ["Only a successful gate creates the gated artifact.", "BigQuery table is protected by row-level security."], x=0.7, y=5.4, w=12, h=1.2, size=15)
+# Slide 3 architecture
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Architecture Overview")
+nodes = [
+    ("Developer Commit", 0.5, 2.5),
+    ("Fail-Closed\nGitHub Actions", 3.2, 2.5),
+    ("GCS\nD0 Raw Landing", 6.0, 1.6),
+    ("BigQuery\nD1 Staged/Enforced", 9.0, 1.6),
+    ("Django + DCYN\nValidation", 6.0, 3.7),
+]
+for text, x, y in nodes:
+    add_node(slide, text, x, y)
+add_arrow(slide, 2.9, 2.95, 3.2, 2.95)
+add_arrow(slide, 5.6, 2.95, 6.0, 2.05)
+add_arrow(slide, 8.4, 2.05, 9.0, 2.05)
+add_arrow(slide, 7.2, 3.7, 7.2, 2.5)
+add_bullets(slide, ["Only a successful gate creates the gated artifact.", "BigQuery table is protected by row-level security."], x=0.7, y=5.4, w=12, h=1.2, size=15)
 
-# # Slide 4
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Terraform Design")
-# add_bullets(slide, [
-#     "Google Cloud Storage bucket: private, uniform bucket-level access, public access prevention, versioning.",
-#     "Conditional object-creation permission is restricted to the raw/ prefix.",
-#     "BigQuery dataset: D1 Staged/Enforced with a student_onboarding table.",
-#     "Dataset and table access are separated by role.",
-#     "Row-level policy exposes only the configured APAC rows to the analytics group.",
-# ], y=1.4, size=19)
+# Slide 4
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Terraform Design")
+add_bullets(slide, [
+    "Google Cloud Storage bucket: private, uniform bucket-level access, public access prevention, versioning.",
+    "Conditional object-creation permission is restricted to the raw/ prefix.",
+    "BigQuery dataset: D1 Staged/Enforced with a student_onboarding table.",
+    "Dataset and table access are separated by role.",
+    "Row-level policy exposes only the configured APAC rows to the analytics group.",
+], y=1.4, size=19)
 
-# # Slide 5
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Storage Security Controls")
-# add_bullets(slide, [
-#     "Uniform bucket-level access removes competing object-level access control lists.",
-#     "Public access prevention blocks accidental public exposure.",
-#     "Versioning supports recovery from accidental overwrite or deletion.",
-#     "Least privilege: ingestion receives object creation rather than broad administrative access.",
-#     "IAM condition limits that permission to the raw/ object prefix.",
-# ], y=1.4, size=19)
+# Slide 5
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Storage Security Controls")
+add_bullets(slide, [
+    "Uniform bucket-level access removes competing object-level access control lists.",
+    "Public access prevention blocks accidental public exposure.",
+    "Versioning supports recovery from accidental overwrite or deletion.",
+    "Least privilege: ingestion receives object creation rather than broad administrative access.",
+    "IAM condition limits that permission to the raw/ object prefix.",
+], y=1.4, size=19)
 
-# # Slide 6
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "BigQuery and Row-Level Security")
-# add_bullets(slide, [
-#     "The student_onboarding table provides the physical data boundary required for row-level policy.",
-#     "Analytics access is granted through a Google Group rather than individual users.",
-#     "Example staging predicate: region = 'APAC'.",
-#     "The production business predicate is intentionally isolated because the hiring brief does not define it.",
-#     "This prevents unrestricted analytics access to all student rows.",
-# ], y=1.4, size=19)
+# Slide 6
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "BigQuery and Row-Level Security")
+add_bullets(slide, [
+    "The student_onboarding table provides the physical data boundary required for row-level policy.",
+    "Analytics access is granted through a Google Group rather than individual users.",
+    "Example staging predicate: region = 'APAC'.",
+    "The production business predicate is intentionally isolated because the hiring brief does not define it.",
+    "This prevents unrestricted analytics access to all student rows.",
+], y=1.4, size=19)
 
 # # Slide 7
 # slide = prs.slides.add_slide(prs.slide_layouts[6])
