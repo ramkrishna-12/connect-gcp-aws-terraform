@@ -85,48 +85,48 @@ for sheet in wb.worksheets:
 xlsx_path = base / "data" / "schema-mapping.xlsx"
 wb.save(xlsx_path)
 
-# # ---------- PowerPoint ----------
-# prs = Presentation()
-# prs.slide_width = Inches(13.333)
-# prs.slide_height = Inches(7.5)
+# ---------- PowerPoint ----------
+prs = Presentation()
+prs.slide_width = Inches(13.333)
+prs.slide_height = Inches(7.5)
 
-# def add_title(slide, title, subtitle=None):
-#     title_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.3), Inches(12.1), Inches(0.7))
-#     tf = title_box.text_frame
-#     p = tf.paragraphs[0]
-#     p.text = title
-#     p.font.size = Pt(28)
-#     p.font.bold = True
-#     if subtitle:
-#         sb = slide.shapes.add_textbox(Inches(0.6), Inches(1.0), Inches(12.1), Inches(0.45))
-#         sp = sb.text_frame.paragraphs[0]
-#         sp.text = subtitle
-#         sp.font.size = Pt(14)
+def add_title(slide, title, subtitle=None):
+    title_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.3), Inches(12.1), Inches(0.7))
+    tf = title_box.text_frame
+    p = tf.paragraphs[0]
+    p.text = title
+    p.font.size = Pt(28)
+    p.font.bold = True
+    if subtitle:
+        sb = slide.shapes.add_textbox(Inches(0.6), Inches(1.0), Inches(12.1), Inches(0.45))
+        sp = sb.text_frame.paragraphs[0]
+        sp.text = subtitle
+        sp.font.size = Pt(14)
 
-# def add_bullets(slide, items, x=0.8, y=1.5, w=11.8, h=5.3, size=20):
-#     box = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
-#     tf = box.text_frame
-#     tf.word_wrap = True
-#     tf.clear()
-#     for i, item in enumerate(items):
-#         p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-#         p.text = item
-#         p.font.size = Pt(size)
-#         p.space_after = Pt(10)
-#         p.level = 0
-#     return box
+def add_bullets(slide, items, x=0.8, y=1.5, w=11.8, h=5.3, size=20):
+    box = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
+    tf = box.text_frame
+    tf.word_wrap = True
+    tf.clear()
+    for i, item in enumerate(items):
+        p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        p.text = item
+        p.font.size = Pt(size)
+        p.space_after = Pt(10)
+        p.level = 0
+    return box
 
-# def add_node(slide, text, x, y, w=2.4, h=0.9):
-#     shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(w), Inches(h))
-#     shape.text_frame.text = text
-#     shape.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
-#     shape.text_frame.paragraphs[0].font.size = Pt(15)
-#     return shape
+def add_node(slide, text, x, y, w=2.4, h=0.9):
+    shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(x), Inches(y), Inches(w), Inches(h))
+    shape.text_frame.text = text
+    shape.text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
+    shape.text_frame.paragraphs[0].font.size = Pt(15)
+    return shape
 
-# def add_arrow(slide, x1, y1, x2, y2):
-#     line = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x1), Inches(y1), Inches(x2), Inches(y2))
-#     line.line.width = Pt(2)
-#     return line
+def add_arrow(slide, x1, y1, x2, y2):
+    line = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(x1), Inches(y1), Inches(x2), Inches(y2))
+    line.line.width = Pt(2)
+    return line
 
 # # Slide 1
 # slide = prs.slides.add_slide(prs.slide_layouts[6])
