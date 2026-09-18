@@ -278,14 +278,14 @@ add_bullets(slide, [
 pptx_path = base / "presentation" / "habotconnect_project.pptx"
 prs.save(pptx_path)
 
-# # ---------- Zip entire project ----------
-# zip_path = Path("/mnt/data/habotconnect_junior_cloud_devops_submission.zip")
-# with ZipFile(zip_path, "w", ZIP_DEFLATED) as z:
-#     for path in base.rglob("*"):
-#         if path.is_file():
-#             z.write(path, path.relative_to(base.parent))
+# ---------- Zip entire project ----------
+zip_path = Path("/mnt/data/habotconnect_junior_cloud_devops_submission.zip")
+with ZipFile(zip_path, "w", ZIP_DEFLATED) as z:
+    for path in base.rglob("*"):
+        if path.is_file():
+            z.write(path, path.relative_to(base.parent))
 
-# print(f"Created project folder: {base}")
-# print(f"Created workbook: {xlsx_path}")
-# print(f"Created presentation: {pptx_path}")
-# print(f"Created submission ZIP: {zip_path}")
+print(f"Created project folder: {base}")
+print(f"Created workbook: {xlsx_path}")
+print(f"Created presentation: {pptx_path}")
+print(f"Created submission ZIP: {zip_path}")
