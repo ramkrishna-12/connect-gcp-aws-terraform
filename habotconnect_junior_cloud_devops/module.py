@@ -239,44 +239,44 @@ add_bullets(slide, [
     "The mapping workbook documents field type, requirement status, limits, logic, and BigQuery destination.",
 ], y=1.4, size=19)
 
-# # Slide 10
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Django REST Framework Validation")
-# add_bullets(slide, [
-#     "Names: 1-100 characters.",
-#     "Email: valid format, maximum 254 characters.",
-#     "Date of birth: ISO date and cannot be in the future.",
-#     "Region: APAC, EMEA, or AMER.",
-#     "Notes: optional, maximum 500 characters.",
-#     "Unknown fields are rejected by the serializer contract.",
-# ], y=1.4, size=19)
+# Slide 10
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Django REST Framework Validation")
+add_bullets(slide, [
+    "Names: 1-100 characters.",
+    "Email: valid format, maximum 254 characters.",
+    "Date of birth: ISO date and cannot be in the future.",
+    "Region: APAC, EMEA, or AMER.",
+    "Notes: optional, maximum 500 characters.",
+    "Unknown fields are rejected by the serializer contract.",
+], y=1.4, size=19)
 
-# # Slide 11
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Failure Demonstration")
-# add_bullets(slide, [
-#     "Scenario A: introduce a Terraform formatting error → Terraform formatting gate fails → artifact job is skipped.",
-#     "Scenario B: introduce a fake test credential → Gitleaks reports a secret → security gate fails → artifact job is skipped.",
-#     "Scenario C: submit Maybe for a Yes/No field → serializer rejects the payload.",
-#     "Scenario D: submit parental consent as No → serializer rejects the payload.",
-# ], y=1.4, size=19)
+# Slide 11
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Failure Demonstration")
+add_bullets(slide, [
+    "Scenario A: introduce a Terraform formatting error → Terraform formatting gate fails → artifact job is skipped.",
+    "Scenario B: introduce a fake test credential → Gitleaks reports a secret → security gate fails → artifact job is skipped.",
+    "Scenario C: submit Maybe for a Yes/No field → serializer rejects the payload.",
+    "Scenario D: submit parental consent as No → serializer rejects the payload.",
+], y=1.4, size=19)
 
-# # Slide 12
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Final Submission Checklist")
-# add_bullets(slide, [
-#     "Terraform code completed and reviewed.",
-#     "Fail-closed GitHub Actions workflow completed.",
-#     "Django REST Framework serializer and DCYN library completed.",
-#     "Schema workbook has Wrap Text enabled.",
-#     "Presentation is within the 15-slide limit.",
-#     "Add actual contact information before submission.",
-#     "Run local checks and demonstrate one failing security gate.",
-#     "Submit through the hiring project's Google Form by 13 September 2026.",
-# ], y=1.35, size=18)
+# Slide 12
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Final Submission Checklist")
+add_bullets(slide, [
+    "Terraform code completed and reviewed.",
+    "Fail-closed GitHub Actions workflow completed.",
+    "Django REST Framework serializer and DCYN library completed.",
+    "Schema workbook has Wrap Text enabled.",
+    "Presentation is within the 15-slide limit.",
+    "Add actual contact information before submission.",
+    "Run local checks and demonstrate one failing security gate.",
+    "Submit through the hiring project's Google Form by 13 September 2026.",
+], y=1.35, size=18)
 
-# pptx_path = base / "presentation" / "habotconnect_project.pptx"
-# prs.save(pptx_path)
+pptx_path = base / "presentation" / "habotconnect_project.pptx"
+prs.save(pptx_path)
 
 # # ---------- Zip entire project ----------
 # zip_path = Path("/mnt/data/habotconnect_junior_cloud_devops_submission.zip")
