@@ -198,46 +198,46 @@ add_bullets(slide, [
     "This prevents unrestricted analytics access to all student rows.",
 ], y=1.4, size=19)
 
-# # Slide 7
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Fail-Closed CI/CD Gate")
-# add_bullets(slide, [
-#     "Terraform fmt -check",
-#     "Terraform initialization and validation",
-#     "TFLint",
-#     "Checkov infrastructure security scan",
-#     "Ruff lint and format checks",
-#     "Django/DCYN unit tests",
-#     "Gitleaks hardcoded-secret scan",
-# ], x=1.0, y=1.35, w=5.5, h=5.5, size=18)
-# add_bullets(slide, [
-#     "All checks are prerequisites for the artifact job.",
-#     "Any failure stops the gate.",
-#     "No successful gate means no gated artifact.",
-#     "This is a control, not merely a warning.",
-# ], x=7.0, y=1.35, w=5.2, h=4.5, size=19)
+# Slide 7
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Fail-Closed CI/CD Gate")
+add_bullets(slide, [
+    "Terraform fmt -check",
+    "Terraform initialization and validation",
+    "TFLint",
+    "Checkov infrastructure security scan",
+    "Ruff lint and format checks",
+    "Django/DCYN unit tests",
+    "Gitleaks hardcoded-secret scan",
+], x=1.0, y=1.35, w=5.5, h=5.5, size=18)
+add_bullets(slide, [
+    "All checks are prerequisites for the artifact job.",
+    "Any failure stops the gate.",
+    "No successful gate means no gated artifact.",
+    "This is a control, not merely a warning.",
+], x=7.0, y=1.35, w=5.2, h=4.5, size=19)
 
-# # Slide 8
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "Hardcoded Secret Protection")
-# add_bullets(slide, [
-#     "Gitleaks scans repository history and working content for credential patterns.",
-#     "The workflow uses a full-history checkout so historical exposure is not silently ignored.",
-#     "A detected secret fails the security gate.",
-#     "The build artifact depends on the successful gate.",
-#     "No real credentials are included in the demonstration.",
-# ], y=1.4, size=19)
+# Slide 8
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "Hardcoded Secret Protection")
+add_bullets(slide, [
+    "Gitleaks scans repository history and working content for credential patterns.",
+    "The workflow uses a full-history checkout so historical exposure is not silently ignored.",
+    "A detected secret fails the security gate.",
+    "The build artifact depends on the successful gate.",
+    "No real credentials are included in the demonstration.",
+], y=1.4, size=19)
 
-# # Slide 9
-# slide = prs.slides.add_slide(prs.slide_layouts[6])
-# add_title(slide, "DCYN Schema Mapping")
-# add_bullets(slide, [
-#     "Yes/No fields are accepted only as deterministic binary values.",
-#     "Yes becomes True; No becomes False.",
-#     "Values such as Maybe are rejected.",
-#     "Parental consent must resolve to Yes.",
-#     "The mapping workbook documents field type, requirement status, limits, logic, and BigQuery destination.",
-# ], y=1.4, size=19)
+# Slide 9
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+add_title(slide, "DCYN Schema Mapping")
+add_bullets(slide, [
+    "Yes/No fields are accepted only as deterministic binary values.",
+    "Yes becomes True; No becomes False.",
+    "Values such as Maybe are rejected.",
+    "Parental consent must resolve to Yes.",
+    "The mapping workbook documents field type, requirement status, limits, logic, and BigQuery destination.",
+], y=1.4, size=19)
 
 # # Slide 10
 # slide = prs.slides.add_slide(prs.slide_layouts[6])
