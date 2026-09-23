@@ -289,3 +289,14 @@ print(f"Created project folder: {base}")
 print(f"Created workbook: {xlsx_path}")
 print(f"Created presentation: {pptx_path}")
 print(f"Created submission ZIP: {zip_path}")
+
+
+# all the code is in one file, and it generates the required deliverables for the HabotConnect Junior Cloud & DevOps Engineer project. It creates a schema mapping workbook, a PowerPoint presentation, and packages everything into a ZIP file for submission.
+# file structure:
+# habotconnect_junior_cloud_devops/
+#  ├── data/
+# │   └── schema-mapping.xlsx
+# └── presentation/
+#    └── habotconnect_project.pptx
+#  └── habotconnect_junior_cloud_devops_submission.zip
+# all files are generated in the /mnt/data/habotconnect_junior_cloud_devops directory, and the final ZIP file is created at /mnt/data/habotconnect_junior_cloud_devops_submission.zip.
