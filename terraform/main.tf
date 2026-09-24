@@ -81,6 +81,10 @@ resource "google_kms_crypto_key" "bigquery" {
   name            = "bigquery-data"
   key_ring        = google_kms_key_ring.bigquery.id
   rotation_period = "7776000s"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_kms_crypto_key_iam_member" "bigquery_service_agent" {
