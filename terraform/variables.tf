@@ -36,7 +36,7 @@ variable "analytics_group_email" {
   type        = string
 
   validation {
-    condition = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", var.analytics_group_email))
+    condition     = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", var.analytics_group_email))
     error_message = "analytics_group_email must be a valid group email."
   }
 }
