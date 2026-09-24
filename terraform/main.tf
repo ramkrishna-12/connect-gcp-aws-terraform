@@ -16,54 +16,54 @@ locals {
       description = "Unique student identifier."
     },
     {
-      name        = "first_name"
-      type        = "STRING"
-      mode        = "REQUIRED"
+      name = "first_name"
+      type = "STRING"
+      mode = "REQUIRED"
     },
     {
-      name        = "last_name"
-      type        = "STRING"
-      mode        = "REQUIRED"
+      name = "last_name"
+      type = "STRING"
+      mode = "REQUIRED"
     },
     {
-      name        = "email"
-      type        = "STRING"
-      mode        = "REQUIRED"
+      name = "email"
+      type = "STRING"
+      mode = "REQUIRED"
     },
     {
-      name        = "date_of_birth"
-      type        = "DATE"
-      mode        = "REQUIRED"
+      name = "date_of_birth"
+      type = "DATE"
+      mode = "REQUIRED"
     },
     {
-      name        = "region"
-      type        = "STRING"
-      mode        = "REQUIRED"
+      name = "region"
+      type = "STRING"
+      mode = "REQUIRED"
     },
     {
-      name        = "has_learning_difficulty"
-      type        = "BOOL"
-      mode        = "REQUIRED"
+      name = "has_learning_difficulty"
+      type = "BOOL"
+      mode = "REQUIRED"
     },
     {
-      name        = "receives_learning_support"
-      type        = "BOOL"
-      mode        = "REQUIRED"
+      name = "receives_learning_support"
+      type = "BOOL"
+      mode = "REQUIRED"
     },
     {
-      name        = "needs_learning_support_assistant"
-      type        = "BOOL"
-      mode        = "REQUIRED"
+      name = "needs_learning_support_assistant"
+      type = "BOOL"
+      mode = "REQUIRED"
     },
     {
-      name        = "parental_consent"
-      type        = "BOOL"
-      mode        = "REQUIRED"
+      name = "parental_consent"
+      type = "BOOL"
+      mode = "REQUIRED"
     },
     {
-      name        = "notes"
-      type        = "STRING"
-      mode        = "NULLABLE"
+      name = "notes"
+      type = "STRING"
+      mode = "NULLABLE"
     }
   ])
 }
