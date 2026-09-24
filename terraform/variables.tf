@@ -26,7 +26,7 @@ variable "ingestion_service_account" {
   type        = string
 
   validation {
-    condition = can(regex("^[^@\\s]+@[^@\\s]+\\.iam\\.gserviceaccount\\.com$", var.ingestion_service_account))
+    condition     = can(regex("^[^@\\s]+@[^@\\s]+\\.iam\\.gserviceaccount\\.com$", var.ingestion_service_account))
     error_message = "ingestion_service_account must be a Google service account email."
   }
 }
@@ -36,7 +36,7 @@ variable "analytics_group_email" {
   type        = string
 
   validation {
-    condition     = can(regex("^[^@\\s]+@[^@\\s]+\.[^@\\s]+$", var.analytics_group_email))
+    condition = can(regex("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", var.analytics_group_email))
     error_message = "analytics_group_email must be a valid group email."
   }
 }
