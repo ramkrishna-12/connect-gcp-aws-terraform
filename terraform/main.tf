@@ -68,6 +68,65 @@ locals {
   ])
 }
 
+data "google_project" "current" {
+  project_id = var.project_id
+}
+
+resource "google_kms_key_ring" "bigquery" {
+  name     = "bq-${var.bucket_name_suffix}"
+  location = "us"
+}
+
+resource "google_kms_crypto_key" "bigquery" {
+  name            = "bigquery-data"
+  key_ring        = google_kms_key_ring.bigquery.id
+  rotation_period = "7776000s"
+}
+
+resource "google_kms_crypto_key_iam_member" "bigquery_service_agent" {
+  crypto_key_id = google_kms_crypto_key.bigquery.id
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  member        = "serviceAccount:bq-${data.google_project.current.number}@bigquery-encryption.iam.gserviceaccount.com"
+}
+
+resource "google_storage_bucket" "audit_logs" {
+  name                        = "${var.project_id}-${var.bucket_name_suffix}-audit-logs"
+  location                    = var.region
+  storage_class               = "STANDARD"
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+  force_destroy               = false
+
+  versioning {
+    enabled = true
+  }
+
+
+  lifecycle_rule {
+    condition {
+      num_newer_versions = 10
+    }
+
+    action {
+      type = "Delete"
+    }
+  }
+
+  # This is the destination for Cloud Storage access logs, so it cannot
+  # meaningfully log its own access to itself.
+  #checkov:skip=CKV_GCP_62:Dedicated access-log destination bucket cannot log to itself.
+
+  labels = merge(local.common_labels, {
+    purpose = "audit-logs"
+  })
+}
+
+resource "google_storage_bucket_iam_member" "audit_log_writer" {
+  bucket = google_storage_bucket.audit_logs.name
+  role   = "roles/storage.objectCreator"
+  member = "serviceAccount:service-${data.google_project.current.number}@gs-project-accounts.iam.gserviceaccount.com"
+}
+
 resource "google_storage_bucket" "raw_landing" {
   name                        = local.raw_bucket_name
   location                    = var.region
@@ -78,6 +137,11 @@ resource "google_storage_bucket" "raw_landing" {
 
   versioning {
     enabled = true
+  }
+
+  logging {
+    log_bucket        = google_storage_bucket.audit_logs.name
+    log_object_prefix = "raw-landing/"
   }
 
   lifecycle_rule {
@@ -112,6 +176,12 @@ resource "google_bigquery_dataset" "staged_enforced" {
   location                   = "US"
   delete_contents_on_destroy = false
 
+  default_encryption_configuration {
+    kms_key_name = google_kms_crypto_key.bigquery.id
+  }
+
+  depends_on = [google_kms_crypto_key_iam_member.bigquery_service_agent]
+
   labels = local.common_labels
 }
 
@@ -132,6 +202,12 @@ resource "google_bigquery_table" "student_onboarding" {
   table_id            = "student_onboarding"
   schema              = local.student_table_schema
   deletion_protection = true
+
+  encryption_configuration {
+    kms_key_name = google_kms_crypto_key.bigquery.id
+  }
+
+  depends_on = [google_kms_crypto_key_iam_member.bigquery_service_agent]
 
   labels = local.common_labels
 }
