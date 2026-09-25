@@ -1,10 +1,8 @@
 from datetime import date
 
-from app.dcyn import DCYNValidationError, parse_dcyn
-
 from rest_framework import serializers
 
-
+from app.dcyn import DCYNValidationError, parse_dcyn
 
 
 class StudentOnboardingSerializer(serializers.Serializer):
@@ -20,7 +18,7 @@ class StudentOnboardingSerializer(serializers.Serializer):
     )
     email = serializers.EmailField(max_length=254)
 
-    # The date_of_birth field is defined as a DateField with specific input and output formats. It expects the date to be provided in the "YYYY-MM-DD" format and will also return the date in the same format when serialized.
+    # Date format is YYYY-MM-DD for input and output.
     date_of_birth = serializers.DateField(
         input_formats=["%Y-%m-%d"],
         format="%Y-%m-%d",
