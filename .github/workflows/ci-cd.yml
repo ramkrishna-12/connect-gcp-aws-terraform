@@ -94,13 +94,38 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
         
+      - name: Install Gitleaks
+
+        run: |
+          set -e
+
+          GITLEAKS_VERSION="8.24.3"
+
+          curl -sSfL \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            -o "$RUNNER_TEMP/gitleaks.tar.gz"
+
+          mkdir -p "$RUNNER_TEMP/gitleaks-bin"
+
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" \
+            -C "$RUNNER_TEMP/gitleaks-bin"
+
+          sudo install \
+            "$RUNNER_TEMP/gitleaks-bin/gitleaks" \
+            /usr/local/bin/gitleaks
+
       - name: Verify Gitleaks
         run: |
-          which gitleaks
+          set -e
+          echo "Gitleaks location:"
+          command -v gitleaks
+          echo "Gitleaks version:"
           gitleaks version
 
       - name: Scan repository for hardcoded secrets
         run: |
+          set -e
+
           mkdir -p "$RUNNER_TEMP/gitleaks"
 
           gitleaks detect \
