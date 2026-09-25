@@ -93,8 +93,11 @@ jobs:
             | sh -s -- -b "$HOME/.local/bin" v8.24.3
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
+        
       - name: Verify Gitleaks
-        run: gitleaks version
+        run: |
+          which gitleaks
+          gitleaks version
 
       - name: Scan repository for hardcoded secrets
         run: |
