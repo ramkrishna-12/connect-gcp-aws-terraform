@@ -1,4 +1,117 @@
 
+# name: Fail-Closed Security Gate
+
+# on:
+#   push:
+#     branches: ["**"]
+#   pull_request:
+
+# permissions:
+#   contents: read
+
+# concurrency:
+#   group: security-gate-${{ github.ref }}
+#   cancel-in-progress: true
+
+# jobs:
+#   security_gate:
+#     name: Security and Quality Gate
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout full history
+#         uses: actions/checkout@v6
+#         with:
+#           fetch-depth: 0
+
+#       - name: Install Terraform
+#         uses: hashicorp/setup-terraform@v4
+#         with:
+#           terraform_version: "1.12.2"
+
+#       - name: Terraform formatting check
+#         working-directory: terraform
+#         run: terraform fmt -check -recursive
+
+#       - name: Terraform initialization
+#         working-directory: terraform
+#         run: terraform init -backend=false -input=false
+
+#       - name: Terraform validation
+#         working-directory: terraform
+#         run: terraform validate
+
+#       - name: Setup TFLint
+#         uses: terraform-linters/setup-tflint@v6
+#         with:
+#           tflint_version: latest
+#           cache: true
+
+#       - name: Initialize TFLint
+#         working-directory: terraform
+#         run: tflint --init
+#         env:
+#           GITHUB_TOKEN: ${{ github.token }}
+
+#       - name: Run TFLint
+#         working-directory: terraform
+#         run: tflint --format compact
+
+#       - name: Run Checkov infrastructure security scan
+#         uses: bridgecrewio/checkov-action@v12.1347.0
+#         with:
+#           directory: terraform
+#           framework: terraform
+#           soft_fail: false
+
+#       - name: Setup Python
+#         uses: actions/setup-python@v6
+#         with:
+#           python-version: "3.12"
+
+#       - name: Install Python dependencies
+#         run: python -m pip install --upgrade pip && pip install -r requirements.txt
+
+#       - name: Ruff lint
+#         uses: astral-sh/ruff-action@v4.1.0
+#         with:
+#           args: "check ."
+
+#       - name: Ruff format check
+#         uses: astral-sh/ruff-action@v4.1.0
+#         with:
+#           args: "format --check ."
+
+#       - name: Django and DCYN tests
+#         run: python -m unittest discover -s tests -v
+
+#       - name: Scan repository for hardcoded secrets
+#         uses: gitleaks/gitleaks-action@v3
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+#   build_artifact:
+#     name: Build Submission Artifact
+#     runs-on: ubuntu-latest
+#     needs: security_gate
+#     if: ${{ needs.security_gate.result == 'success' }}
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v6
+
+#       - name: Package source
+#         run: |
+#           mkdir -p dist
+#           tar             --exclude='./.git'             --exclude='./.terraform'             --exclude='./dist'             -czf dist/habotconnect-project.tar.gz .
+
+#       - name: Upload gated artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: habotconnect-gated-project
+#           path: dist/habotconnect-project.tar.gz
+
+
 name: Fail-Closed Security Gate
 
 on:
@@ -70,7 +183,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install Python dependencies
-        run: python -m pip install --upgrade pip && pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Ruff lint
         uses: astral-sh/ruff-action@v4.1.0
@@ -85,10 +200,33 @@ jobs:
       - name: Django and DCYN tests
         run: python -m unittest discover -s tests -v
 
+      - name: Install Gitleaks
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh \
+            | sh -s -- -b "$HOME/.local/bin" v8.24.3
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Verify Gitleaks
+        run: gitleaks version
+
       - name: Scan repository for hardcoded secrets
-        uses: gitleaks/gitleaks-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/gitleaks"
+
+          gitleaks detect \
+            --source . \
+            --redact \
+            --exit-code 1 \
+            --report-format sarif \
+            --report-path "$RUNNER_TEMP/gitleaks/results.sarif"
+
+      - name: Upload Gitleaks report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-results
+          path: ${{ runner.temp }}/gitleaks/results.sarif
+          if-no-files-found: ignore
 
   build_artifact:
     name: Build Submission Artifact
@@ -103,7 +241,12 @@ jobs:
       - name: Package source
         run: |
           mkdir -p dist
-          tar             --exclude='./.git'             --exclude='./.terraform'             --exclude='./dist'             -czf dist/habotconnect-project.tar.gz .
+
+          tar \
+            --exclude='./.git' \
+            --exclude='./.terraform' \
+            --exclude='./dist' \
+            -czf dist/habotconnect-project.tar.gz .
 
       - name: Upload gated artifact
         uses: actions/upload-artifact@v4
