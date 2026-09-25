@@ -1,10 +1,10 @@
-
 from datetime import date
 
+from app.dcyn import DCYNValidationError, parse_dcyn
 
 from rest_framework import serializers
 
-from app.dcyn import DCYNValidationError, parse_dcyn
+
 
 
 class StudentOnboardingSerializer(serializers.Serializer):
@@ -12,9 +12,15 @@ class StudentOnboardingSerializer(serializers.Serializer):
 
     ALLOWED_REGIONS = {"APAC", "EMEA", "AMER"}
 
-    first_name = serializers.CharField(min_length=1, max_length=100, trim_whitespace=True)
-    last_name = serializers.CharField(min_length=1, max_length=100, trim_whitespace=True)
+    first_name = serializers.CharField(
+        min_length=1, max_length=100, trim_whitespace=True
+    )
+    last_name = serializers.CharField(
+        min_length=1, max_length=100, trim_whitespace=True
+    )
     email = serializers.EmailField(max_length=254)
+
+    # The date_of_birth field is defined as a DateField with specific input and output formats. It expects the date to be provided in the "YYYY-MM-DD" format and will also return the date in the same format when serialized.
     date_of_birth = serializers.DateField(
         input_formats=["%Y-%m-%d"],
         format="%Y-%m-%d",
@@ -56,9 +62,7 @@ class StudentOnboardingSerializer(serializers.Serializer):
         try:
             return parse_dcyn(value)
         except DCYNValidationError as exc:
-            raise serializers.ValidationError(
-                {field_name: str(exc)}
-            ) from exc
+            raise serializers.ValidationError({field_name: str(exc)}) from exc
 
     def validate_has_learning_difficulty(self, value: object) -> bool:
         return self._validate_dcyn("has_learning_difficulty", value)
@@ -72,16 +76,12 @@ class StudentOnboardingSerializer(serializers.Serializer):
     def validate_parental_consent(self, value: object) -> bool:
         parsed = self._validate_dcyn("parental_consent", value)
         if not parsed:
-            raise serializers.ValidationError(
-                "parental_consent must be Yes."
-            )
+            raise serializers.ValidationError("parental_consent must be Yes.")
         return parsed
 
     def validate_date_of_birth(self, value: date) -> date:
         if value > date.today():
-            raise serializers.ValidationError(
-                "date_of_birth cannot be in the future."
-            )
+            raise serializers.ValidationError("date_of_birth cannot be in the future.")
         return value
 
     def validate(self, attrs: dict) -> dict:

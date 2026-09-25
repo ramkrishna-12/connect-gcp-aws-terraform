@@ -1,4 +1,3 @@
-
 import unittest
 
 from django.conf import settings
@@ -8,7 +7,6 @@ if not settings.configured:
 
 from app.dcyn import DCYNValidationError, parse_dcyn
 from app.serializers import StudentOnboardingSerializer
-
 
 VALID_PAYLOAD = {
     "first_name": "Maya",
